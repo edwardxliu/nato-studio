@@ -7,7 +7,12 @@ const BUILD_DIRECTORY = 'dist';
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Config entrypoint files
-const ENTRY_POINTS = ['src/index.ts', 'src/home/index.ts', 'src/tess/index.ts'];
+const ENTRY_POINTS = [
+  'src/index.ts',
+  'src/home/index.ts',
+  'src/tess/index.ts',
+  'src/about-us/index.ts',
+];
 
 // Config dev serving
 const LIVE_RELOAD = !PRODUCTION;
@@ -19,6 +24,10 @@ const context = await esbuild.context({
   bundle: true,
   entryPoints: ENTRY_POINTS,
   outdir: BUILD_DIRECTORY,
+  loader: {
+    '.vert': 'text',
+    '.frag': 'text', // 如果你也有片元着色器文件
+  },
   minify: PRODUCTION,
   sourcemap: !PRODUCTION,
   target: PRODUCTION ? 'es2020' : 'esnext',

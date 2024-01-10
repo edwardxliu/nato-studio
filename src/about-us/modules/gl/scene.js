@@ -13,11 +13,11 @@ export default class {
   events() {
     this.mouse = { x: 0, y: 0, wx: window.innerWidth, wy: window.innerHeight };
 
-    document.addEventListener('mousemove', (e) => {
-      this.mouse.x = (e.clientX / this.mouse.wx) * 2 - 1;
-      this.mouse.y = -(e.clientY / this.mouse.wy) * 2 + 1;
-      // console.log(this.mouse.x, this.mouse.y);
-    });
+    // document.addEventListener('mousemove', (e) => {
+    //   this.mouse.x = (e.clientX / this.mouse.wx) * 2 - 1;
+    //   this.mouse.y = -(e.clientY / this.mouse.wy) * 2 + 1;
+    //   // console.log(this.mouse.x, this.mouse.y);
+    // });
   }
 
   create() {

@@ -40,7 +40,7 @@ export function init() {
   });
 
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(100, 50, 150);
+  camera.position.set(100, 50, 130);
 
   clock = new THREE.Clock();
 
@@ -100,8 +100,8 @@ export function init() {
     } else {
       object.scale.setScalar((container.clientWidth / container.clientHeight) * 0.1);
     }
-    object.position.set(140, 0, 0);
-    object.rotation.y = 4.5;
+    object.position.set(140, 10, 0);
+    object.rotation.y = 4.9;
 
     // object.position.set(60, -30, 0);
     // object.addEventListener('touchstart', () => {

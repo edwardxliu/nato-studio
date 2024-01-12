@@ -14,7 +14,7 @@ let requestId;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let cat;
 
-const container = document.querySelector('.about-cat_component');
+const container = document.querySelector('.about-footer_component');
 // const progressBar = document.getElementById('progress-bar');
 // const progressBarContainer = document.querySelector('.progress-bar-container');
 
@@ -30,17 +30,23 @@ var manager = new THREE.LoadingManager();
 
 export function init() {
   canvas = document.querySelector('#bubble');
-  canvas.height = container.offsetHeight;
-  canvas.width = container.offsetWidth;
-  // console.log(canvas.style);
+  // canvas.height = container.offsetHeight;
+  canvas.height = 2 * window.innerHeight;
+
+  // canvas.height = 2000;
+  canvas.width = window.innerWidth;
+  // console.log(canvas.width, canvas.height);
   renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
     alpha: true,
   });
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(100, 50, 130);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / 2 / window.innerHeight, 0.1, 1000);
+  // camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+
+  camera.position.set(100, 170, 150);
+  // camera.top = 2000;
 
   clock = new THREE.Clock();
 
@@ -76,7 +82,6 @@ export function init() {
   const loader = new FBXLoader(manager);
   // loader.load('https://edwardxliu.github.io/media/3d-model/cat3.fbx', function (object) {
   loader.load('https://qn.edwardxwliu.cn/cat%20fix.fbx', function (object) {
-    // console.log(object);
     object.traverse(function (child) {
       if (child.isMesh) {
         // console.log(child);
@@ -100,8 +105,11 @@ export function init() {
     } else {
       object.scale.setScalar((container.clientWidth / container.clientHeight) * 0.1);
     }
-    object.position.set(140, 10, 0);
+    // object.scale.x = offsetWidth;
+    // object.scale.y = offsetHeight;
+    object.position.set(140, 80, 0);
     object.rotation.y = 4.9;
+    // camera.lookAt(object.position);
 
     // object.position.set(60, -30, 0);
     // object.addEventListener('touchstart', () => {
@@ -195,7 +203,9 @@ export function init() {
 
   // renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  // renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight * 2); // 设置渲染器尺寸为屏幕尺寸的两倍
+
   renderer.useLegacyLights = false;
   // canvas.appendChild(renderer.domElement);
   renderer.shadowMap.enabled = true;
@@ -231,16 +241,16 @@ export function init() {
 }
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = window.innerWidth / 2 / window.innerHeight;
   camera.updateProjectionMatrix();
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, 2 * window.innerHeight);
 }
 
 export function observe_animate() {
   const observerOptions = {
     root: null, // Use the viewport as the root
-    threshold: 0.5, // The callback is triggered as soon as the target enters or exits the viewport
+    threshold: 0.3, // The callback is triggered as soon as the target enters or exits the viewport
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -257,7 +267,7 @@ export function observe_animate() {
   }, observerOptions);
 
   // Start observing the canvas wrapper div
-  observer.observe(container);
+  observer.observe(canvas);
 }
 
 function animate() {

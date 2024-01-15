@@ -13,8 +13,9 @@ let cat_left_arm;
 let requestId;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let cat;
+const view_height_ratio = 1.7;
 
-const container = document.querySelector('.about-footer_component');
+const container = document.querySelector('.about-cat-canvas_wrapper');
 // const progressBar = document.getElementById('progress-bar');
 // const progressBarContainer = document.querySelector('.progress-bar-container');
 
@@ -30,8 +31,9 @@ var manager = new THREE.LoadingManager();
 
 export function init() {
   canvas = document.querySelector('#bubble');
-  // canvas.height = container.offsetHeight;
-  canvas.height = 2 * window.innerHeight;
+  // canvas.height = 2*container.offsetHeight;
+  // canvas.width = container.offsetWidth;
+  canvas.height = view_height_ratio * window.innerHeight;
 
   // canvas.height = 2000;
   canvas.width = window.innerWidth;
@@ -42,10 +44,15 @@ export function init() {
     alpha: true,
   });
 
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / 2 / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / view_height_ratio / window.innerHeight,
+    0.1,
+    1000
+  );
   // camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
 
-  camera.position.set(100, 170, 150);
+  camera.position.set(125, 172, 42);
   // camera.top = 2000;
 
   clock = new THREE.Clock();
@@ -107,7 +114,7 @@ export function init() {
     }
     // object.scale.x = offsetWidth;
     // object.scale.y = offsetHeight;
-    object.position.set(140, 80, 0);
+    object.position.set(140, 148, 0);
     object.rotation.y = 4.9;
     // camera.lookAt(object.position);
 
@@ -203,8 +210,8 @@ export function init() {
 
   // renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
-  // renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setSize(window.innerWidth, window.innerHeight * 2); // 设置渲染器尺寸为屏幕尺寸的两倍
+  renderer.setSize(window.innerWidth, view_height_ratio * window.innerHeight);
+  // renderer.setSize(window.innerWidth, window.innerHeight * 2); // 设置渲染器尺寸为屏幕尺寸的两倍
 
   renderer.useLegacyLights = false;
   // canvas.appendChild(renderer.domElement);
@@ -241,10 +248,10 @@ export function init() {
 }
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / 2 / window.innerHeight;
+  camera.aspect = window.innerWidth / view_height_ratio / window.innerHeight;
   camera.updateProjectionMatrix();
 
-  renderer.setSize(window.innerWidth, 2 * window.innerHeight);
+  renderer.setSize(window.innerWidth, view_height_ratio * window.innerHeight);
 }
 
 export function observe_animate() {
